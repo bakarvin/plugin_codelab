@@ -34,4 +34,12 @@ abstract class PluginCodelabPlatform extends PlatformInterface {
   Future<int?> onKeyUp(int key) {
     throw UnimplementedError('onKeyUp() has not been implemented');
   }
+
+  Future<String?> aesEncrypt(String key) {
+    throw UnimplementedError('aesEncrypt() has not been implemented');
+  }
+
+  Future<String?> aesDecrypt(String key) {
+    throw UnimplementedError('aesDecrypt() has not been implemented');
+  }
 }

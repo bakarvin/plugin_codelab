@@ -1,6 +1,10 @@
 package com.example.plugin_codelab;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+
 
 import java.util.ArrayList;
 
@@ -18,6 +22,7 @@ public class PluginCodelabPlugin implements FlutterPlugin, MethodCallHandler {
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
   private MethodChannel channel;
+  private AES256 aesEncrypt;
   private Synth Synth;
   private static final String channelName = "plugin_codelab";
 
@@ -25,6 +30,7 @@ public class PluginCodelabPlugin implements FlutterPlugin, MethodCallHandler {
     plugin.channel = new MethodChannel(binaryMessenger, channelName);
     plugin.channel.setMethodCallHandler(plugin);
     plugin.Synth = new Synth();
+    plugin.aesEncrypt = new AES256();
     plugin.Synth.start();
   }
 
@@ -36,6 +42,7 @@ public class PluginCodelabPlugin implements FlutterPlugin, MethodCallHandler {
   }
 
   //handles message from dart method channel
+  @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
     if (call.method.equals("getPlatformVersion")) {
@@ -53,6 +60,22 @@ public class PluginCodelabPlugin implements FlutterPlugin, MethodCallHandler {
         ArrayList args = (ArrayList) call.arguments;
         int numKeysDown = Synth.keyUp((Integer) args.get(0));
         result.success(numKeysDown);
+      } catch (Exception ex){
+        result.error("1", ex.getMessage(), ex.getStackTrace());
+      }
+    } else if (call.method.equals("encrypt")) {
+      try {
+        String args = (String) call.arguments;
+        String encrypt = aesEncrypt.encrypt((String) args);
+        result.success(encrypt);
+      } catch (Exception ex) {
+        result.error("1", ex.getMessage(), ex.getStackTrace());
+      }
+    } else if (call.method.equals("decrypt")) {
+      try {
+        String args = (String) call.arguments;
+        String decrypt = aesEncrypt.decrypt((String) args);
+        result.success(decrypt);
       } catch (Exception ex){
         result.error("1", ex.getMessage(), ex.getStackTrace());
       }

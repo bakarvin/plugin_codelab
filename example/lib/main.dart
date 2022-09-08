@@ -29,12 +29,16 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
+    String test = 'Hai saya lagi belajar encrypt';
+    print(test);
+    PluginCodelab.aesEncrypt(test).then((value) {
+      print(value);
+      PluginCodelab.aesDecrypt(value!).then((value) => print(value));
+    });
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
-
     try {
       platformVersion = await PluginCodelab.getPlatformVersion() ??
           'Unknown platform version';
@@ -42,9 +46,6 @@ class _MyAppState extends State<MyApp> {
       platformVersion = 'Failed to get platform version.';
     }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
 
     setState(() {

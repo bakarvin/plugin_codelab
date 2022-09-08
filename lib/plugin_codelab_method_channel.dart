@@ -27,4 +27,14 @@ class MethodChannelPluginCodelab extends PluginCodelabPlatform {
     final numNotesOn = await methodChannel.invokeMethod<int?>('onKeyUp', [key]);
     return numNotesOn;
   }
+  
+  Future<String?> aesEncrypt(String key) async {
+    final encrypt = await methodChannel.invokeMethod('encrypt', key);
+    return encrypt;
+  }
+
+  Future<String?> aesDecrypt(String key) async {
+    final decrypt = await methodChannel.invokeMethod('decrypt', key);
+    return decrypt;
+  }
 }
