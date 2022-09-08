@@ -14,7 +14,7 @@ abstract class PluginCodelabPlatform extends PlatformInterface {
   ///
   /// Defaults to [MethodChannelPluginCodelab].
   static PluginCodelabPlatform get instance => _instance;
-  
+
   /// Platform-specific implementations should set this with their own
   /// platform-specific class that extends [PluginCodelabPlatform] when
   /// they register themselves.
@@ -25,5 +25,13 @@ abstract class PluginCodelabPlatform extends PlatformInterface {
 
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<int?> onKeyDown(int key) {
+    throw UnimplementedError('onKeyDown() has not been implemented.');
+  }
+
+  Future<int?> onKeyUp(int key) {
+    throw UnimplementedError('onKeyUp() has not been implemented');
   }
 }

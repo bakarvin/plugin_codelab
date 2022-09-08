@@ -11,7 +11,20 @@ class MethodChannelPluginCodelab extends PluginCodelabPlatform {
 
   @override
   Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
+    final version =
+        await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
+  }
+
+  @override
+  Future<int?> onKeyDown(int key) async {
+    final numNotesOn =
+        await methodChannel.invokeMethod<int>('onKeyDown', [key]);
+    return numNotesOn;
+  }
+
+  Future<int?> onKeyUp(int key) async {
+    final numNotesOn = await methodChannel.invokeMethod<int?>('onKeyUp', [key]);
+    return numNotesOn;
   }
 }
